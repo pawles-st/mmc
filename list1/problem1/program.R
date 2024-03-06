@@ -12,32 +12,56 @@ generate <- function(a, m, no_values) {
 
 # first generator
 
-m <- 37
-a <- 19
-no_values1 <- 50
-random_values1 <- generate(a, m, no_values1)
-print(random_values1) # period of the first generated is equal to 36
+for (no_repeats in c(50, 500, 1000)) {
+	m <- 37
+	a <- 19
+	no_values1 <- no_repeats
+	random_values1 <- generate(a, m, no_values1)
+	print(random_values1) # period of the first generated is equal to 36
 
-# second generator
+	# second generator
 
-m <- 2^31 - 1
-a <- 39373
-no_values2 <- 50
-random_values2 <- generate(a, m, no_values2)
-print(random_values2)
+	m <- 2^31 - 1
+	a <- 39373
+	no_values2 <- no_repeats
+	random_values2 <- generate(a, m, no_values2)
+	print(random_values2)
 
-# plotting the numbers on the number line
+	# plotting the numbers on the number line and drawing the frequency histogram
 
-plot(random_values1, rep(0, no_values1))
-abline(h = 0)
-plot(random_values2, rep(0, no_values2))
-abline(h = 0)
+	png(paste("generator1line_", no_repeats, ".png", sep = ""))
+	plot(random_values1, rep(0, no_values1))
+	abline(h = 0)
+	dev.off()
 
-# plotting the number pairs from one generator on the square to visualise dependency
+	png(paste("generator1hist_", no_repeats, ".png", sep = ""))
+	hist(random_values1, breaks = 10, probability = TRUE)
+	abline(h = 1, col = "green", lwd = 3)
+	dev.off()
 
-plot(random_values1[2 * 1:(no_values1 / 2) - 1], random_values1[2 * 1:(no_values1 / 2)])
-plot(random_values2[2 * 1:(no_values2 / 2) - 1], random_values2[2 * 1:(no_values2 / 2)])
+	png(paste("generator2line_", no_repeats, ".png", sep = ""))
+	plot(random_values2, rep(0, no_values2))
+	abline(h = 0)
+	dev.off()
 
-# plotting the number pairs from two used generators
+	png(paste("generator2hist_", no_repeats, ".png", sep = ""))
+	hist(random_values2, breaks = 10, probability = TRUE)
+	abline(h = 1, col = "green", lwd = 3)
+	dev.off()
 
-plot(random_values1, random_values2;
+	# plotting the number pairs from one generator on the square to visualise dependency
+
+	png(paste("dependent1_", no_repeats, ".png", sep = ""))
+	plot(random_values1[2 * 1:(no_values1 / 2) - 1], random_values1[2 * 1:(no_values1 / 2)])
+	dev.off()
+
+	png(paste("dependent2_", no_repeats, ".png", sep = ""))
+	plot(random_values2[2 * 1:(no_values2 / 2) - 1], random_values2[2 * 1:(no_values2 / 2)])
+	dev.off()
+
+	# plotting the number pairs from two used generators
+
+	png(paste("independent_", no_repeats, ".png", sep = ""))
+	plot(random_values1, random_values2)
+	dev.off()
+}
