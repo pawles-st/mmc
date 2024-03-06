@@ -13,12 +13,12 @@ for (no.repeats in c(50, 500, 1000)) {
 	# plot the pairs on a square
 
 	png(paste("square_", no.repeats, ".png", sep = ""))
-	plot(x.values, y.values, xlim = c(0, 1), ylim = c(0, 1))
+	plot(x.values, y.values, xlim = c(0, 1), ylim = c(0, 1), main = "rozmieszczenie par punktów z generatora wbudowanego na kwadracie", xlab = "pierwsza współrzędna", ylab = "druga współrzędna")
 	dev.off()
 
 	# plot the density
 
-	grid.size = 5
+	grid.size = 3
 	occurences = matrix(0, grid.size, grid.size)
 	for (i in 1:no.repeats) {
 		occurences[1 + floor(grid.size * x.values[i]), 1 + floor(grid.size * y.values[i])] = occurences[1 + floor(grid.size * x.values[i]), 1 + floor(grid.size * y.values[i])] + 1
@@ -26,7 +26,7 @@ for (no.repeats in c(50, 500, 1000)) {
 	occurences <- c(occurences)
 
 	png(paste("frequency_", no.repeats, ".png", sep = ""))
-	plot(1:25, occurences / no.repeats * grid.size^2, type = "l", ylim = c(0, 2))
+	plot(1:grid.size^2, occurences / no.repeats * grid.size^2, type = "l", ylim = c(0, 2), main = "Porównanie rozkładu łącznego generatora z gęstością rozkładu jednostajnego", xlab = "wartość", ylab = "wartość gęstości")
 	abline(h = 1, col = "green", lwd = 3)
 	dev.off()
 }
