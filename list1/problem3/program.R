@@ -60,7 +60,7 @@ for (i in 1:no.repeats) {
 }
 
 png("bernoulli.png")
-hist(bernoulli.numbers, breaks = 2, probability = TRUE, xlim = c(0, 1), main = "Histogram generatora dla rozkładu Bernoulliego z parametrem p = 0.7", xlab = "argument", ylab = "wartość funkcji masy")
+hist(bernoulli.numbers, xlim = c(0, 1), main = "Histogram generatora dla rozkładu Bernoulliego\nz parametrem p = 0.7", xlab = "argument", ylab = "wartość funkcji masy")
 dev.off()
 
 binomial.numbers <- 0:10
@@ -69,8 +69,15 @@ for (i in 1:no.repeats) {
 	binomial.numbers <- c(binomial.numbers, generate.binomial(10, 0.7))
 }
 
+binomial.mass <- c()
+
+for (i in 0:10) {
+	binomial.mass <- c(binomial.mass, choose(10, i) * 0.7^i * 0.3^(10 - i))
+}
+
 png("binomial.png")
 hist(binomial.numbers, breaks = 10, probability = TRUE, xlim = c(0, 10), main = "Histogram generatora dla rozkładu dwumianowego z parametrami n = 10, p = 0.7", xlab = "argument", ylab = "wartość funkcji masy")
+lines(0:10, binomial.mass, col = "green", lwd = 3)
 dev.off()
 
 poisson.numbers <- 0:10
@@ -79,6 +86,13 @@ for (i in 1:no.repeats) {
 	poisson.numbers <- c(poisson.numbers, generate.poisson(0.7))
 }
 
+poisson.mass <- c()
+
+for (i in 0:10) {
+	poisson.mass <- c(poisson.mass, exp(-0.7) * (0.7)^i / factorial(i))
+}
+
 png("poisson.png")
 hist(poisson.numbers, breaks = 10, probability = TRUE, xlim = c(0, 10), main = "Histogram generatora dla rozkładu Poissona z parametrem lambda = 0.3", xlab = "argument", ylab = "wartość funkcji masy")
+lines(0:10, poisson.mass, col = "green", lwd = 3)
 dev.off()
