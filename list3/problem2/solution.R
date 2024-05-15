@@ -11,13 +11,16 @@ for (n in 1:sample.size) {
 
 norm.sample <- rnorm(sample.size, sd = sqrt(2) / 2)
 estimates <- c()
+variances <- c()
 for (n in 1:sample.size) {
 	n.sample <- norm.sample[1:n]
 	n.estimate <- sqrt(pi) * length(n.sample[n.sample >= 0 & n.sample <= 1]) / n
 	estimates <- c(estimates, n.estimate)
+	variances <- c(variances, var(n.sample))
 }
 
 estimates
+variances
 
 # part 2
 
@@ -56,5 +59,3 @@ for (i in 1:sample.size) {
 
 estimate <- sum(in.mandelbrot, na.rm = TRUE) / sample.size
 estimate
-
-help("Mod")

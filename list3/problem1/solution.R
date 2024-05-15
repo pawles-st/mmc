@@ -97,5 +97,3 @@ dev.off()
 png("norm23.png")
 plot(pts[2, ], pts[3, ])
 dev.off()
-
-help("lapply")
